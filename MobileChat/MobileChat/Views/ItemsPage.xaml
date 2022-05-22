@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileChat.Views.ItemsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:MobileChat.ViewModels"  
+             xmlns:model="clr-namespace:MobileChat.Models"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ItemsListView"
+                ItemsSource="{Binding Dialogs}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedItem}"
+                SelectionChangedCommand="{Binding ItemTapped}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <StackLayout Padding="10,10,0,0" Orientation="Horizontal" x:DataType="model:DialogWithLastMessage">
+                            <Label Text="{Binding Path=Dialog.Name}"
+                                   LineBreakMode="NoWrap" 
+                                   Style="{DynamicResource ListItemTextStyle}" 
+                                   FontSize="16" TextColor="Black">
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Padding="10,0,0,10" Orientation="Horizontal" x:DataType="model:DialogWithLastMessage">
+                            <Label Text="{Binding Path=LastMessage.SenderName}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13" TextColor="Black"
+                                   FontAttributes="Bold">
+                            </Label>
+                            <Label Text="{Binding Path=LastMessage.Message}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13" TextColor="Black"
+                                   FontAttributes="Italic">
+                            </Label>
+                            <Label Text="{Binding Path=LastMessage.DateTimeSent}"
+                                   LineBreakMode="NoWrap"
+                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                   FontSize="13" TextColor="Black"
+                                   FontAttributes="Italic">
+                            </Label>
+                        </StackLayout>
+                        <!--<StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
+                                CommandParameter="{Binding .}">
+                            </TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>-->
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>

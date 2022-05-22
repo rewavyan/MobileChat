@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:MobileChat.ViewModels" 
+             x:DataType="viewmodels:RegistrationViewModel"
+             mc:Ignorable="d"
+             x:Class="MobileChat.Views.RegistrationPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <ScrollView VerticalOptions="Center">
+            <StackLayout Padding="10,0">
+                <Label Text="Регистрация" FontSize="Large" HorizontalTextAlignment="Center"/>
+                <Entry Placeholder="Имя" Text="{Binding Path=Name}"/>
+                <Entry Placeholder="Логин" Text="{Binding Path=Login}"/>
+                <Entry Placeholder="Пароль" Text="{Binding Path=Password}" IsPassword="True"/>
+                <Label Text="{Binding Path=Error}" HorizontalTextAlignment="Center" TextColor="Red" MaxLines="10"/>
+                <Button VerticalOptions="Center" Text="Зарегистрироваться" Command="{Binding RegistrationCommand}"/>
+                <Button VerticalOptions="Center" Text="Назад" Command="{Binding BackCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
